@@ -1,21 +1,21 @@
 import React from 'react'
 
-function Weather() {
+function Weather(props) {
     return (
         <div className="container">
             <div className="cards">
-                <h1>Dubland</h1>
+                <h1>{props.city}, {props.country}</h1>
                 <h5 className="py-4">
                     <i className="wi wi-day-sunny display-1"></i>
                 </h5>
                 <h1 className="py-2">
-                    25&deg;
+                    {props.celsius}&deg;
                 </h1>
 
                 {/** show maximum and minimum temperature */}
-                {minmaxTemp(13, 17)}
+                {minmaxTemp(props.temp_min, props.temp_max)}
 
-                <h4 className="py-3">Heavy Downpour</h4>
+                <h4 className="py-3">{props.description}</h4>
             </div>
         </div>
     )
