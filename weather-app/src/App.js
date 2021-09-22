@@ -83,12 +83,12 @@ class App extends Component {
       const response = await api_call.json();
       
       this.setState({
-        city: response.name,
-        country: response.sys.country,
+        city: `${response.name}, ${response.sys.country}`,
         celsius: this.getCelsius(response.main.temp),
         temp_max: this.getCelsius(response.main.temp_max),
         temp_min: this.getCelsius(response.main.temp_min),
         description: response.weather[0].description,
+        error: false
       });
 
       this.getWeatherIcon(this.icon, response.weather[0].id);
@@ -102,7 +102,8 @@ class App extends Component {
     return (
       <div className="App">
         <WeatherForm
-        loadWeather={this.getWeather} />
+        loadWeather={this.getWeather}
+        error={this.state.error} />
         <Weather
         city={this.state.city}
         country={this.state.country}
