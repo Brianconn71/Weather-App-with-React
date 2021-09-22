@@ -5,7 +5,6 @@ import 'weather-icons/css/weather-icons.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Weather from './components/weather'
 import WeatherForm from './components/weatherForm'
-import CurrentLocation from './components/currentLocation'
 
 // api key and call
 const API_KEY = "0e8101f4eef5859e4e6770d8c591a76e"
@@ -70,17 +69,6 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    var latitude, longitude;
-    navigator.geolocation.getCurrentPosition(function(position) {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
-
-      latitude = position.coords.latitude
-      longitude = position.coords.longitude
-      
-    });
-  }
 
 
   getWeather = async (e) =>{
