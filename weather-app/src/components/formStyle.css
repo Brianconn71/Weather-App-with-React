@@ -10,3 +10,8 @@ input[name="country"]{
     border-bottom: 2px solid whitesmoke;
     border-radius: 0;
 }
+
+form input:focus {
+    background-color: transparent;
+    box-shadow: none !important;
+}
