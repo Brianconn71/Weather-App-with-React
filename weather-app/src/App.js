@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import './App.css';
 
 import 'weather-icons/css/weather-icons.css';
@@ -21,8 +21,13 @@ class App extends Component {
       temp_min: undefined,
       temp_max: undefined,
       description: "",
+      latitude: undefined,
+      longitude: undefined,
       error: false
     };
+
+    this.getLocation = this.getLocation.bind(this);
+    this.getCoordinates = this.getCoordinates.bind(this);
 
     this.icon = {
       Thunderstorm: "wi-thunderstorm",
@@ -69,7 +74,40 @@ class App extends Component {
     }
   }
 
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.getCoordinates, this.handleLocationError);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
 
+  getCoordinates(position){
+    this.setState({
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    })
+  }
+
+
+  handleLocationError(error) {
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        alert("User denied the request for Geolocation.")
+        break;
+      case error.POSITION_UNAVAILABLE:
+        alert("Location information is unavailable.")
+        break;
+      case error.TIMEOUT:
+        alert("The request to get user location timed out.")
+        break;
+      case error.UNKNOWN_ERROR:
+        alert("An unknown error occurred.")
+        break;
+      default:
+        alert("An unknown error occurred.")
+    }
+  }
 
   getWeather = async (e) =>{
 
@@ -105,6 +143,9 @@ class App extends Component {
         <WeatherForm
         loadWeather={this.getWeather}
         error={this.state.error} />
+        <button onClick={this.getCoordinates}>Get Location</button>
+        <p>latitude {this.state.latitude}</p>
+        <p>longitude {this.state.longitude}</p>
         <Weather
         city={this.state.city}
         country={this.state.country}
